@@ -1,11 +1,18 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Raleway } from "next/font/google";
 import "./globals.css";
+import Navbar from "@/components/Navbar";
 
-const inter = Inter({
+const fontInter = Inter({
   subsets: ["latin"],
   weight: ['300', '400', '500', '600', '700'],
   variable: "--font-inter",
+});
+
+const fontSans = Raleway({
+  subsets: ["latin"],
+  weight: ['300', '400', '500', '600', '700'],
+  variable: "--font-sans",
 });
 
 export const metadata: Metadata = {
@@ -21,8 +28,9 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${inter.className} antialiased`}
+        className={`${fontInter.variable} ${fontSans.variable} font-inter antialiased`}
       >
+        <Navbar />
         {children}
       </body>
     </html>
