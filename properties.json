@@ -7,7 +7,7 @@
     "description": "A relaxing apartment in the heart of Quezon City, close to malls and restaurants.",
     "location": {
       "street": "123 Katipunan Ave",
-      "city": "Quezon City",
+      "city": "QC",
       "state": "Metro Manila",
       "zipcode": "1105"
     },
@@ -96,8 +96,8 @@
     "description": "A luxurious beachside condo in Cebu with access to white sand shores.",
     "location": {
       "street": "Mango Avenue",
-      "city": "Cebu City",
-      "state": "Cebu",
+      "city": "Parañaque",
+      "state": "Metro Manila",
       "zipcode": "6000"
     },
     "beds": 3,
@@ -142,8 +142,8 @@
     "description": "Charming countryside home in Davao City, perfect for quiet getaways.",
     "location": {
       "street": "J.P. Laurel Ave",
-      "city": "Davao City",
-      "state": "Davao del Sur",
+      "city": "San Juan",
+      "state": "Metro Manila",
       "zipcode": "8000"
     },
     "beds": 1,
@@ -171,7 +171,7 @@
     "description": "A peaceful townhouse in Manila near historic landmarks and shopping centers.",
     "location": {
       "street": "Escolta Street",
-      "city": "Manila",
+      "city": "Malabon",
       "state": "Metro Manila",
       "zipcode": "1000"
     },
@@ -207,7 +207,7 @@
     "description": "A relaxing apartment in the heart of Quezon City, close to malls and restaurants.",
     "location": {
       "street": "123 Katipunan Ave",
-      "city": "Quezon City",
+      "city": "QC",
       "state": "Metro Manila",
       "zipcode": "1105"
     },
@@ -273,8 +273,8 @@
     "description": "A luxurious beachside condo in Cebu with access to white sand shores.",
     "location": {
       "street": "Mango Avenue",
-      "city": "Cebu City",
-      "state": "Cebu",
+      "city": "Makati",
+      "state": "Metro Manila",
       "zipcode": "6000"
     },
     "beds": 3,
@@ -303,8 +303,8 @@
     "description": "Charming countryside home in Davao City, perfect for quiet getaways.",
     "location": {
       "street": "J.P. Laurel Ave",
-      "city": "Davao City",
-      "state": "Davao del Sur",
+      "city": "Marikina",
+      "state": "Metro Manila",
       "zipcode": "8000"
     },
     "beds": 4,
@@ -339,7 +339,7 @@
     "description": "A peaceful townhouse in Manila near historic landmarks and shopping centers.",
     "location": {
       "street": "Escolta Street",
-      "city": "Manila",
+      "city": "Pasay",
       "state": "Metro Manila",
       "zipcode": "1000"
     },
