@@ -71,24 +71,24 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
 
                 <div className="flex justify-center gap-4 text-gray-500 mb-4">
                     <p>
-                        <FaBed className="md:hidden lg:inline mr-1" /> {beds} {' '}
-                        <span className="md:hidden lg:inline">Beds</span>
+                        <FaBed className="inline mr-0 lg:mr-1" /> {beds} {' '}
+                        <span className="inline">Beds</span>
                     </p>
                     <p>
-                        <FaBath className="md:hidden lg:inline mr-1" /> {baths} {' '}
-                        <span className="md:hidden lg:inline">Baths</span>
+                        <FaBath className="inline mr-0 lg:mr-1" /> {baths} {' '}
+                        <span className="inline">Baths</span>
                     </p>
                     <p>
-                        <FaRulerCombined className="md:hidden lg:inline mr-1" /> {square_feet}
-                        <span className="md:hidden lg:inline">sqft</span>
+                        <FaRulerCombined className="inline mr-0 lg:mr-1" /> {square_feet}
+                        <span className="inline">sqft</span>
                     </p>
                 </div>
 
                 <div
                     className="flex justify-center gap-4 text-green-900 text-sm mb-4"
                 >
-                    <p><FaMoneyBill className="md:hidden lg:inline mr-1" /> Weekly</p>
-                    <p><FaMoneyBill className="md:hidden lg:inline mr-1" /> Monthly</p>
+                    <p><FaMoneyBill className="inline mr-1" /> Weekly</p>
+                    <p><FaMoneyBill className="inline mr-1" /> Monthly</p>
                 </div>
 
                 <div className="border border-gray-100 mb-5"></div>
