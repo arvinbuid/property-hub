@@ -1,43 +1,16 @@
 import Link from "next/link"
 import Image from "next/image"
 import { FaBed, FaBath, FaRulerCombined, FaMoneyBill, FaMapMarker } from 'react-icons/fa';
-interface PropertyCardProps {
-    property: {
-        _id: string;
-        owner: string;
-        name: string;
-        type: string;
-        description: string;
-        location: {
-            street: string;
-            city: string;
-            state: string;
-            zipcode: string;
-        };
-        beds: number;
-        baths: number;
-        square_feet: number;
-        amenities: string[];
-        rates: {
-            weekly?: number;
-            monthly?: number;
-            nightly?: number;
-        };
-        seller_info: {
-            name: string;
-            email: string;
-            phone: string;
-        };
-        images: string[];
-        is_featured: boolean;
-        createdAt: string;
-        updatedAt: string;
-    }
+import { PropertyType } from "../../types/property";
+
+type PropertyCardProps = {
+    property: PropertyType;
 }
 
 const PropertyCard = ({ property }: PropertyCardProps) => {
     const { images, type, name, location, beds, baths, square_feet, rates } = property;
     const { city, state } = location;
+
 
     const getDisplayRate = () => {
         if (rates.monthly) {
