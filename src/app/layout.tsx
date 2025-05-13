@@ -3,6 +3,7 @@ import { Inter, Raleway } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import SessionProvider from "@/components/SessionProvider";
 
 const fontInter = Inter({
   subsets: ["latin"],
@@ -27,14 +28,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${fontInter.variable} ${fontSans.variable} font-inter antialiased`}
-      >
-        <Navbar />
-        {children}
-        <Footer />
-      </body>
-    </html>
+    <SessionProvider>
+      <html lang="en" suppressHydrationWarning>
+        <body
+          className={`${fontInter.variable} ${fontSans.variable} font-inter antialiased`}
+        >
+          <Navbar />
+          {children}
+          <Footer />
+        </body>
+      </html>
+    </SessionProvider>
   );
 }
