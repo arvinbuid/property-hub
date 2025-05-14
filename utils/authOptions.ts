@@ -43,10 +43,7 @@ export const authOptions = {
       const user = await User.findOne({email: session.user.email});
 
       // Assign user id from the session
-      if (user && session.user) {
-        session.user.id = user._id.toString();
-      }
-
+      session.user.id = user._id.toString();
       return session;
     },
   },
