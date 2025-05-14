@@ -7,15 +7,28 @@ import logo from "../../src/app/assets/images/logo-white.png";
 import profileDefault from "../../src/app/assets/images/profile.png";
 
 import { FaGoogle } from "react-icons/fa";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import { signIn, useSession, getProviders, LiteralUnion, ClientSafeProvider } from "next-auth/react";
+import { BuiltInProviderType } from "next-auth/providers/index";
 
 const Navbar = () => {
+    const { data: session } = useSession();
+
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
-    const [isLoggedIn] = useState(true);
+    const [providers, setProviders] = useState<Record<LiteralUnion<BuiltInProviderType, string>, ClientSafeProvider> | null>(null);
 
     const pathname = usePathname();
+
+    useEffect(() => {
+        const setAuthProviders = async () => {
+            const res = await getProviders();
+            setProviders(res);
+        }
+
+        setAuthProviders();
+    }, [])
 
     return (
         <nav className="bg-blue-700 border-b border-blue-500">
@@ -75,7 +88,7 @@ const Navbar = () => {
                                     href="/properties"
                                     className={`${pathname === '/properties' ? 'bg-black' : ''} text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2`}
                                 >Properties</Link>
-                                {isLoggedIn && (
+                                {session && (
                                     <Link
                                         href="/properties/add"
                                         className={`${pathname === '/properties/add' ? 'bg-black' : ''} text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2`}
@@ -86,24 +99,26 @@ const Navbar = () => {
                     </div>
 
                     {/* Right Side Menu (Logged Out) */}
-                    {!isLoggedIn && (
+                    {!session && (
                         <div className="hidden md:block md:ml-6">
                             <div className="flex items-center">
-                                <button
-                                    className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2"
-                                >
-                                    <FaGoogle className="text-white mr-2" />
-                                    <span>Login or Register</span>
-                                </button>
+                                {providers && Object.values(providers).map((provider) => (
+                                    <button
+                                        key={provider.id}
+                                        className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2"
+                                        onClick={() => signIn(provider.id)}
+                                    >
+                                        <FaGoogle className="text-white mr-2" />
+                                        <span>Login or Register</span>
+                                    </button>
+                                ))}
                             </div>
                         </div>
                     )}
 
                     {/* Right Side Menu (Logged In) */}
-                    {isLoggedIn && (
-                        <div
-                            className="absolute inset-y-0 right-0 flex items-center pr-2 md:static md:inset-auto md:ml-6 md:pr-0"
-                        >
+                    {session && (
+                        <div className="absolute inset-y-0 right-0 flex items-center pr-2 md:static md:inset-auto md:ml-6 md:pr-0">
                             <Link href="/messages" className="relative group">
                                 <button
                                     type="button"
@@ -204,10 +219,10 @@ const Navbar = () => {
                             Home
                         </Link>
                         <Link href="/properties" className="text-white block rounded-md px-3 py-2 text-base font-medium">Properties</Link>
-                        {isLoggedIn && (
+                        {session && (
                             <Link href="/properties/add" className="text-white block rounded-md px-3 py-2 text-base font-medium">Add Property</Link>
                         )}
-                        {!isLoggedIn && (
+                        {!session && (
                             <button className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-5 ">
                                 <i className="fa-brands fa-google mr-2"></i>
                                 <span>Login or Register</span>

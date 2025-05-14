@@ -1,11 +1,10 @@
-import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
 import type {NextAuthOptions} from "next-auth";
 
 const {GOOGLE_CLIENT_ID = "", GOOGLE_CLIENT_SECRET = ""} = process.env; // https://stackoverflow.com/questions/73464345/next-auth-providers-with-a-typescript-error
 
-export const authOptions: NextAuthOptions = {
+export const authOptions = {
   providers: [
     GoogleProvider({
       clientId: GOOGLE_CLIENT_ID,
@@ -22,7 +21,7 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     // This will be invoked after a successful sign in
-    async signIn({profile}) {
+    async signIn() {
       // 1. Connect to database
       // 2. Check if user exists
       // 3. If not created, create user
@@ -35,6 +34,6 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
   },
-};
+} satisfies NextAuthOptions;
 
-export default NextAuth(authOptions);
+export default authOptions;
