@@ -8,7 +8,7 @@ type PropertyCardProps = {
 }
 
 const PropertyCard = ({ property }: PropertyCardProps) => {
-    const { images, type, name, location, beds, baths, square_feet, rates } = property;
+    const { type, name, location, beds, baths, square_feet, rates } = property;
     const { city, state } = location;
 
 
@@ -25,7 +25,7 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
     return (
         <div className="rounded-xl shadow-md relative">
             <Image
-                src={`/images/properties/${images[0]}`}
+                src={property.images[0]}
                 alt=""
                 width={0}
                 height={0}
