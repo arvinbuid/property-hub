@@ -6,7 +6,6 @@ interface PropertyHeaderImageProps {
 }
 
 const PropertyHeaderImage = ({ image, name }: PropertyHeaderImageProps) => {
-    console.log(image)
     return (
         <section>
             <div className="container-xl m-auto">

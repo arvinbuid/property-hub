@@ -17,7 +17,7 @@ const ProfileProperties = ({ properties: initialProperties }: ProfilePropertiesP
             {
                 properties.map((property, index) => (
                     <div key={index} className="mb-10">
-                        <Link href="/">
+                        <Link href={`/properties/${property._id}`}>
                             <Image
                                 className="h-32 w-full rounded-md object-cover"
                                 src={property.images[0]}

@@ -2,11 +2,13 @@ import PropertyHeaderImage from "@/components/PropertyHeaderImage";
 import connectDB from "../../../../config/database";
 import Property from "../../../../models/Property";
 
-import { PropertyType } from "../../../../types/property";
 import Link from "next/link";
-import { FaArrowLeft } from "react-icons/fa";
 import PropertyDetails from "@/components/PropertyDetails";
 import PropertyImages from "@/components/PropertyImages";
+
+import { PropertyType } from "../../../../types/property";
+import { FaArrowLeft } from "react-icons/fa";
+import { convertToSerializableObject } from "../../../../utils/convertToObject";
 
 const PropertyPage = async (props: {
     params: Promise<{
@@ -15,9 +17,12 @@ const PropertyPage = async (props: {
 }) => {
     const { id } = await props.params;
     await connectDB();
-    const property = await Property.findById(id).lean<PropertyType>();
 
-    if (!property) return <p className="text-xl text-red-500 pt-6 pl-4">Property not found.</p>
+    const propertyDoc = await Property.findById(id).lean<PropertyType>();
+
+    if (!propertyDoc) return <p className="text-xl text-red-500 pt-6 pl-4">Property not found.</p>
+
+    const property = convertToSerializableObject(propertyDoc) as PropertyType;
 
     return (
         <>

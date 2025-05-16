@@ -2,10 +2,11 @@ import Image from "next/image";
 import connectDB from "../../../config/database";
 import Property from "../../../models/Property";
 import profileDefault from '../assets/images/profile.png'
+import ProfileProperties from "@/components/ProfileProperties";
 
 import { getSessionUser } from "../../../utils/getSessionUser";
-import ProfileProperties from "@/components/ProfileProperties";
 import { PropertyType } from "../../../types/property";
+import { convertToSerializableObject } from "../../../utils/convertToObject";
 
 const ProfilePage = async () => {
     await connectDB();
@@ -18,7 +19,9 @@ const ProfilePage = async () => {
 
     const { userId } = sessionUser;
 
-    const properties = await Property.find({ owner: userId }).lean<PropertyType[]>();
+    const propertiesDocs = await Property.find({ owner: userId }).lean<PropertyType[]>();
+
+    const properties = propertiesDocs.map((doc) => convertToSerializableObject(doc) as PropertyType);
 
     return (
         <section className="bg-blue-50">
