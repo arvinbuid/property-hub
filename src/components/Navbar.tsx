@@ -189,14 +189,24 @@ const Navbar = () => {
                                                 role="menuitem"
                                                 tabIndex={-1}
                                                 id="user-menu-item-0"
-                                            >Your Profile</Link>
+                                                onClick={() => {
+                                                    setIsProfileMenuOpen(false)
+                                                }}
+                                            >
+                                                Your Profile
+                                            </Link>
                                             <Link
                                                 href="/properties/saved"
                                                 className="block px-4 py-2 text-sm text-gray-700"
                                                 role="menuitem"
                                                 tabIndex={-1}
                                                 id="user-menu-item-2"
-                                            >Saved Properties</Link>
+                                                onClick={() => {
+                                                    setIsProfileMenuOpen(false)
+                                                }}
+                                            >
+                                                Saved Properties
+                                            </Link>
                                             <button
                                                 className="block px-4 py-2 text-sm text-gray-700"
                                                 role="menuitem"
