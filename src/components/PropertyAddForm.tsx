@@ -1,8 +1,34 @@
+'use client'
+
 import { addProperty } from "@/app/actions/addProperties";
+import { useRouter } from "next/navigation";
+import { useActionState, useEffect } from "react";
+import toast from "react-hot-toast";
+
+const initialState = {
+    success: false,
+    message: '',
+    redirect: ''
+}
 
 const PropertyAddForm = () => {
+    const router = useRouter();
+    const [state, formAction, isPending] = useActionState(addProperty, initialState);
+
+    useEffect(() => {
+        if (state.message) {
+            if (state.success) {
+                toast.success(state.message);
+            } else {
+                toast.error(state.message);
+            }
+        }
+
+        if (state.redirect) router.push(state.redirect);
+    }, [state, router]);
+
     return (
-        <form action={addProperty}>
+        <form action={formAction}>
             <h2 className="text-3xl text-center font-semibold mb-10 md:mb-8">
                 Add Property
             </h2>
@@ -365,8 +391,9 @@ const PropertyAddForm = () => {
                 <button
                     className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline transition-colors"
                     type="submit"
+                    disabled={isPending}
                 >
-                    Add Property
+                    {isPending ? 'Adding Property...' : 'Add Property'}
                 </button>
             </div>
         </form>

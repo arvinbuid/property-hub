@@ -5,13 +5,30 @@ import Image from "next/image";
 import { PropertyType } from "../../types/property";
 import { useState } from "react";
 import Link from "next/link";
+import deleteProperty from "@/app/actions/deleteProperty";
+import toast from "react-hot-toast";
 
 interface ProfilePropertiesProps {
     properties: PropertyType[];
 }
 
 const ProfileProperties = ({ properties: initialProperties }: ProfilePropertiesProps) => {
-    const [properties] = useState(initialProperties);
+    const [properties, setProperties] = useState(initialProperties);
+
+    const handleDeleteProperty = async (propertyId: string) => {
+        const confirmDelete = window.confirm("Are you sure you want to delete this property?");
+
+        if (!confirmDelete) return;
+
+        await deleteProperty(propertyId);
+
+        const updatedProperties = properties.filter((property) => property._id !== propertyId);
+
+        setProperties(updatedProperties);
+
+        toast.success("Property deleted successfully.");
+    }
+
     return (
         <>
             {
@@ -40,6 +57,7 @@ const ProfileProperties = ({ properties: initialProperties }: ProfilePropertiesP
                             <button
                                 className="bg-red-500 text-white px-3 py-2 rounded-md hover:bg-red-600"
                                 type="button"
+                                onClick={() => handleDeleteProperty(property._id)}
                             >
                                 Delete
                             </button>
