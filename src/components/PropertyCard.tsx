@@ -14,11 +14,11 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
 
     const getDisplayRate = () => {
         if (rates.monthly) {
-            return `$${rates.monthly}/mo`;
+            return `₱${rates.monthly.toLocaleString()}/mo`;
         } else if (rates.weekly) {
-            return `$${rates.weekly}/wk`;
+            return `₱${rates.weekly.toLocaleString()}/wk`;
         } else if (rates.nightly) {
-            return `$${rates.nightly}/night`;
+            return `₱${rates.nightly.toLocaleString()}/night`;
         }
     }
 
@@ -26,7 +26,7 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
         <div className="rounded-xl shadow-md relative">
             <Image
                 src={property.images[0]}
-                alt=""
+                alt="Property Image"
                 width={0}
                 height={0}
                 sizes="100vw"
