@@ -1,19 +1,49 @@
 'use client'
 
+import { useActionState, useEffect } from "react";
 import { PropertyType } from "../../types/property";
+import { updateProperty } from "@/app/actions/updateProperty";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 interface PropertyEditFormProps {
     property: PropertyType;
 }
 
+const initialState = {
+    success: false,
+    message: '',
+    redirect: ''
+}
+
 const PropertyEditForm = ({ property }: PropertyEditFormProps) => {
+    const [state, formAction, isPending] = useActionState(updateProperty, initialState);
+    const router = useRouter();
+
     const { name, type, description, location, beds, baths, square_feet, amenities, rates, seller_info } = property;
-    const { street, city, state, zipcode } = location;
+    const { street, city, state: location_state, zipcode } = location;
     const { nightly, weekly, monthly } = rates;
     const { name: seller_name, email, phone } = seller_info;
 
+
+    useEffect(() => {
+        if (state.message) {
+            if (state.success) {
+                toast.success(state.message);
+            } else {
+                toast.error(state.message);
+            }
+        }
+
+        if (state.redirect) router.push(state.redirect);
+    }, [state, router]);
+
+
     return (
-        <form>
+        <form action={formAction}>
+            {/* Hidden input to pass the property ID */}
+            <input type="hidden" name="propertyId" value={property._id} />
+
             <h2 className="text-2xl md:text-3xl text-center font-semibold mb-10 md:mb-8">
                 Edit Property
             </h2>
@@ -85,7 +115,7 @@ const PropertyEditForm = ({ property }: PropertyEditFormProps) => {
                     type="text"
                     id="state"
                     name="location.state"
-                    defaultValue={state}
+                    defaultValue={location_state}
                     className="border rounded w-full py-2 px-3 mb-2"
                     placeholder="State"
                     required
@@ -394,8 +424,9 @@ const PropertyEditForm = ({ property }: PropertyEditFormProps) => {
                 <button
                     className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline transition-colors"
                     type="submit"
+                    disabled={isPending}
                 >
-                    Edit Property
+                    {isPending ? 'Updating...' : 'Update Property'}
                 </button>
             </div>
         </form>
