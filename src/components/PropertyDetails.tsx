@@ -1,5 +1,6 @@
 import { FaCheck, FaTimes, FaBed, FaBath, FaRulerCombined, FaMapMarker } from "react-icons/fa";
 import { PropertyType } from "../../types/property";
+import PropertyMap from "./PropertyMap";
 
 interface PropertyDetailsProps {
     property: PropertyType;
@@ -85,6 +86,10 @@ const PropertyDetails = ({ property }: PropertyDetailsProps) => {
                         </li>
                     ))}
                 </ul>
+            </div>
+
+            <div className="bg-white p-6 rounded-lg shadow-md mt-6">
+                <PropertyMap property={property} />
             </div>
         </main>
     );

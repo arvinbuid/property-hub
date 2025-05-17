@@ -9,12 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@maptiler/sdk": "^3.2.2",
     "cloudinary": "^2.6.1",
     "clsx": "^2.1.1",
     "mongodb": "^6.16.0",
     "mongoose": "^8.14.2",
     "next": "15.3.2",
     "next-auth": "^4.24.11",
+    "opencage-api-client": "^1.1.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-hot-toast": "^2.5.2",
