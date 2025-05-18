@@ -5,17 +5,21 @@ import Link from "next/link"
 
 import logo from "../../src/app/assets/images/logo-white.png";
 import profileDefault from "../../src/app/assets/images/profile.png";
+import clsx from "clsx";
 
 import { FaGoogle } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { signIn, signOut, useSession, getProviders, LiteralUnion, ClientSafeProvider } from "next-auth/react";
+import { signIn, signOut, getProviders, LiteralUnion, ClientSafeProvider } from "next-auth/react";
 import { BuiltInProviderType } from "next-auth/providers/index";
+import type { Session } from "next-auth";
 
-const Navbar = () => {
+interface NavbarProps {
+    session: Session | null;
+}
+
+const Navbar = ({ session }: NavbarProps) => {
     const pathname = usePathname();
-    const { data: session } = useSession();
-
     const profileImage = session?.user.image;
 
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -84,17 +88,32 @@ const Navbar = () => {
                                 <div className="flex space-x-2">
                                     <Link
                                         href="/"
-                                        className={`${pathname === '/' ? 'bg-black' : ''} text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2`}
-                                    >Home</Link>
+                                        className={clsx(
+                                            pathname === '/' && 'bg-black',
+                                            'text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2'
+                                        )}
+                                    >
+                                        Home
+                                    </Link>
                                     <Link
                                         href="/properties"
-                                        className={`${pathname === '/properties' ? 'bg-black' : ''} text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2`}
-                                    >Properties</Link>
+                                        className={clsx(
+                                            pathname === '/properties' && 'bg-black',
+                                            'text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2'
+                                        )}
+                                    >
+                                        Properties
+                                    </Link>
                                     {session && (
                                         <Link
                                             href="/properties/add"
-                                            className={`${pathname === '/properties/add' ? 'bg-black' : ''} text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2`}
-                                        >Add Property</Link>
+                                            className={clsx(
+                                                pathname === '/properties/add' && 'bg-black',
+                                                'text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2'
+                                            )}
+                                        >
+                                            Add Property
+                                        </Link>
                                     )}
                                 </div>
                             </div>

@@ -1,10 +1,13 @@
-import type { Metadata } from "next";
-import { Inter, Raleway } from "next/font/google";
 import "./globals.css";
+import authOptions from "../../utils/authOptions";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SessionProvider from "@/components/SessionProvider";
+
+import type { Metadata } from "next";
+import { Inter, Raleway } from "next/font/google";
 import { Toaster } from 'react-hot-toast';
+import { getServerSession } from "next-auth";
 
 const fontInter = Inter({
   subsets: ["latin"],
@@ -23,23 +26,25 @@ export const metadata: Metadata = {
   description: "Find your dream property here at Property Hub!"
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await getServerSession(authOptions);
+
   return (
-    <SessionProvider>
-      <html lang="en" suppressHydrationWarning>
-        <body
-          className={`${fontInter.variable} ${fontSans.variable} font-inter antialiased`}
-        >
-          <Navbar />
+    <html lang="en" suppressHydrationWarning>
+      <body
+        className={`${fontInter.variable} ${fontSans.variable} font-inter antialiased`}
+      >
+        <SessionProvider session={session}>
+          <Navbar session={session} />
           {children}
           <Toaster />
           <Footer />
-        </body>
-      </html>
-    </SessionProvider>
+        </SessionProvider>
+      </body>
+    </html>
   );
 }
