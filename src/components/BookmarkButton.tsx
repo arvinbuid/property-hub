@@ -11,13 +11,14 @@ import { useEffect, useState } from "react";
 
 interface BookmarkButtonProps {
     property: PropertyType;
+    initialIsBookmarked: boolean;
 }
 
-const BookmarkButton = ({ property }: BookmarkButtonProps) => {
+const BookmarkButton = ({ property, initialIsBookmarked }: BookmarkButtonProps) => {
     const { data: session } = useSession();
     const userId = session?.user?.id;
 
-    const [isBookmarked, setIsBookmarked] = useState(false);
+    const [isBookmarked, setIsBookmarked] = useState(initialIsBookmarked);
 
     useEffect(() => {
         if (!userId) return;

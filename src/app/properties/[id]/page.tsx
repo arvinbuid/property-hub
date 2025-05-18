@@ -12,6 +12,7 @@ import PropertyContactForm from "@/components/PropertyContactForm";
 import { PropertyType } from "../../../../types/property";
 import { FaArrowLeft } from "react-icons/fa";
 import { convertToSerializableObject } from "../../../../utils/convertToObject";
+import checkBookmarkStatus from "@/app/actions/checkBookmarkStatus";
 
 const PropertyPage = async (props: {
     params: Promise<{
@@ -26,6 +27,11 @@ const PropertyPage = async (props: {
     if (!propertyDoc) return <p className="text-xl text-red-500 pt-6 pl-4">Property not found.</p>
 
     const property = convertToSerializableObject(propertyDoc) as PropertyType;
+
+    const bookmarkStatus = await checkBookmarkStatus(property._id);
+
+    // Check if property is bookmarked and pass it as a prop
+    const isBookmarked = 'isBookmarked' in bookmarkStatus ? bookmarkStatus.isBookmarked : false;
 
     return (
         <>
@@ -48,7 +54,7 @@ const PropertyPage = async (props: {
                     <div className="grid grid-cols-1 lg:grid-cols-70/30 w-full gap-6">
                         <PropertyDetails property={property} />
                         <aside className="space-y-4">
-                            <BookmarkButton property={property} />
+                            <BookmarkButton property={property} initialIsBookmarked={isBookmarked} />
                             <ShareButtons property={property} />
                             <PropertyContactForm property={property} />
                         </aside>
