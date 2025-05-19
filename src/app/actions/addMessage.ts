@@ -5,7 +5,12 @@ import Message from "../../../models/Message";
 
 import {getSessionUser} from "../../../utils/getSessionUser";
 
-const addMessage = async (formData: FormData) => {
+export type State = {
+  submitted: boolean;
+  error: string;
+};
+
+const addMessage = async (prevState: State, formData: FormData): Promise<State> => {
   try {
     await connectDB();
 
@@ -22,8 +27,8 @@ const addMessage = async (formData: FormData) => {
     if (userId === recipient) throw new Error("You cannot send a message to yourself.");
 
     const newMessage = new Message({
-      sender: userId,
-      recipient,
+      sender: userId, // current logged in user
+      recipient, // owner of the property
       property: formData.get("property"),
       name: formData.get("name"),
       email: formData.get("email"),
@@ -35,12 +40,14 @@ const addMessage = async (formData: FormData) => {
 
     return {
       submitted: true,
-      message: "Message sent successfully.",
+      error: "",
     };
-  } catch (error) {
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "An unknown error occurred.";
+
     return {
       submitted: false,
-      message: `Error sending message: ${error}`,
+      error: message,
     };
   }
 };
