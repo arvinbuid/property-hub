@@ -1,11 +1,12 @@
 'use client'
 
-import { addProperty } from "@/app/actions/addProperties";
+import toast from "react-hot-toast";
+import addProperty, { State } from "@/app/actions/addProperties";
+
 import { useRouter } from "next/navigation";
 import { useActionState, useEffect } from "react";
-import toast from "react-hot-toast";
 
-const initialState = {
+const initialState: State = {
     success: false,
     message: '',
     redirect: ''
@@ -16,12 +17,12 @@ const PropertyAddForm = () => {
     const [state, formAction, isPending] = useActionState(addProperty, initialState);
 
     useEffect(() => {
-        if (state.message) {
-            if (state.success) {
-                toast.success(state.message);
-            } else {
-                toast.error(state.message);
-            }
+        if (!state.message) return; // Not show toast if no message
+
+        if (state.success) {
+            toast.success(state.message);
+        } else {
+            toast.error(state.message);
         }
 
         if (state.redirect) router.push(state.redirect);

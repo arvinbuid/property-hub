@@ -1,16 +1,17 @@
 'use client'
 
+import toast from "react-hot-toast";
+import updateProperty, { State } from "@/app/actions/updateProperty";
+
 import { useActionState, useEffect } from "react";
 import { PropertyType } from "../../types/property";
-import { updateProperty } from "@/app/actions/updateProperty";
-import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
 interface PropertyEditFormProps {
     property: PropertyType;
 }
 
-const initialState = {
+const initialState: State = {
     success: false,
     message: '',
     redirect: ''
@@ -27,12 +28,12 @@ const PropertyEditForm = ({ property }: PropertyEditFormProps) => {
 
 
     useEffect(() => {
-        if (state.message) {
-            if (state.success) {
-                toast.success(state.message);
-            } else {
-                toast.error(state.message);
-            }
+        if (!state.message) return;
+
+        if (state.success) {
+            toast.success(state.message);
+        } else {
+            toast.error(state.message);
         }
 
         if (state.redirect) router.push(state.redirect);

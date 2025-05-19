@@ -6,9 +6,14 @@ import cloudinary from "../../../config/cloudinary";
 
 import {getSessionUser} from "../../../utils/getSessionUser";
 import {revalidatePath} from "next/cache";
-// import {redirect} from "next/navigation";
 
-export const addProperty = async (prevState: any, formData: FormData) => {
+export type State = {
+  success: boolean;
+  message: string;
+  redirect?: string;
+};
+
+const addProperty = async (prevState: State, formData: FormData): Promise<State> => {
   try {
     await connectDB();
 
@@ -96,3 +101,5 @@ export const addProperty = async (prevState: any, formData: FormData) => {
     };
   }
 };
+
+export default addProperty;

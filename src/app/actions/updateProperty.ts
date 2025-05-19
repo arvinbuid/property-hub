@@ -6,7 +6,13 @@ import Property from "../../../models/Property";
 import {revalidatePath} from "next/cache";
 import {getSessionUser} from "../../../utils/getSessionUser";
 
-export const updateProperty = async (prevState: any, formData: FormData) => {
+export type State = {
+  success: boolean;
+  message: string;
+  redirect?: string;
+};
+
+const updateProperty = async (prevState: State, formData: FormData): Promise<State> => {
   try {
     await connectDB();
 
@@ -73,3 +79,5 @@ export const updateProperty = async (prevState: any, formData: FormData) => {
     };
   }
 };
+
+export default updateProperty;
