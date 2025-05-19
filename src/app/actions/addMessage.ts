@@ -22,7 +22,7 @@ const addMessage = async (formData: FormData) => {
     if (userId === recipient) throw new Error("You cannot send a message to yourself.");
 
     const newMessage = new Message({
-      owner: userId,
+      sender: userId,
       recipient,
       property: formData.get("property"),
       name: formData.get("name"),
