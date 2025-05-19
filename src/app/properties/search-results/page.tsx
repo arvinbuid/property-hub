@@ -3,6 +3,10 @@ import Property from "../../../../models/Property";
 import { FilterQuery } from "mongoose";
 import { convertToSerializableObject } from "../../../../utils/convertToObject";
 import { PropertyType } from "../../../../types/property";
+import PropertySearchForm from "@/components/PropertySearchForm";
+import Link from "next/link";
+import { FaArrowAltCircleLeft } from "react-icons/fa";
+import PropertyCard from "@/components/PropertyCard";
 
 const PropertySearchResult = async (props: {
     searchParams: Promise<{
@@ -34,8 +38,30 @@ const PropertySearchResult = async (props: {
 
     const queryResults = await Property.find(query).lean<PropertyType[]>();
     const properties = convertToSerializableObject(queryResults);
+
     return (
-        <div>Search Result</div>
+        <>
+            <section className="bg-blue-700 py-4">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-start">
+                    <PropertySearchForm />
+                </div>
+            </section>
+            <section className="px-4 py-6">
+                <div className="container xl lg:container mx-auto px-4 py-6">
+                    <Link href='/properties' className="flex items-center underline-offset-4 text-blue-500 hover:underline hover:cursor-pointer mb-8">
+                        <FaArrowAltCircleLeft className="mr-2 mb-1" />Back to Properties
+                    </Link>
+                    <h1 className="text-xl mb-4 font-bold">Search Results:</h1>
+                    {properties.length === 0 ? (<p className="text-lg">No search results found😔</p>) : (
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {properties.map((property: PropertyType) => (
+                                <PropertyCard key={property._id} property={property} />
+                            ))}
+                        </div>
+                    )}
+                </div>
+            </section>
+        </>
     );
 }
 
