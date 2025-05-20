@@ -1,10 +1,10 @@
 import connectDB from "../../../config/database";
 import Message from "../../../models/Message";
+import MessageCard from "@/components/MessageCard";
 
 import { getSessionUser } from "../../../utils/getSessionUser";
 import { MessageType } from "../../../types/message";
 import { convertToSerializableObject } from "../../../utils/convertToObject";
-import MessageCard from "@/components/MessageCard";
 
 const MessagePage = async () => {
     await connectDB();
@@ -29,14 +29,12 @@ const MessagePage = async () => {
         .sort({ createdAt: -1 })
         .lean();
 
-    const messages = [...readMessages, ...unreadMessages].map((messageDoc) => {
+    const messages = [...unreadMessages, ...readMessages,].map((messageDoc) => {
         const message = convertToSerializableObject(messageDoc);
         message.sender = convertToSerializableObject(message.sender);
         message.property = convertToSerializableObject(message.property);
         return message as MessageType;
     });
-
-    console.log(messages)
 
     return (
         <section className="bg-blue-50">
