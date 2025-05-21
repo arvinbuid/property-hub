@@ -1,11 +1,12 @@
 'use client'
 
+import toast from "react-hot-toast";
 import markMessageAsRead from "@/app/actions/markMessageAsRead";
 import deleteMessage from "@/app/actions/deleteMessage";
+import useGlobalContext from "../../hooks/useGlobalContext";
 
 import { MessageType } from "../../types/message";
 import { useState } from "react";
-import toast from "react-hot-toast";
 
 interface MessageCardProps {
     message: MessageType;
@@ -15,10 +16,13 @@ const MessageCard = ({ message }: MessageCardProps) => {
     const { email, phone, body, property, createdAt } = message;
     const [isRead, setIsRead] = useState(message.read);
 
+    const { setUnreadMessageCount } = useGlobalContext()
+
     const handleMarkAsReadClick = async () => {
         const read = await markMessageAsRead(message._id);
 
         setIsRead(read);
+        setUnreadMessageCount(prevCount => read ? prevCount - 1 : prevCount + 1);
         toast.success(`Message marked as ${read ? 'read' : 'new'}`)
     }
 
@@ -27,6 +31,7 @@ const MessageCard = ({ message }: MessageCardProps) => {
 
         if (!confirmDelete) return;
 
+        setUnreadMessageCount(prevCount => isRead ? prevCount : prevCount - 1);
         await deleteMessage(message._id);
         toast.success('Message deleted successfully.');
     }
