@@ -8,6 +8,7 @@ import type { Metadata } from "next";
 import { Inter, Raleway } from "next/font/google";
 import { Toaster } from 'react-hot-toast';
 import { getServerSession } from "next-auth";
+import { GlobalProvider } from "../../context/GlobalContext";
 
 const fontInter = Inter({
   subsets: ["latin"],
@@ -39,10 +40,12 @@ export default async function RootLayout({
         className={`${fontInter.variable} ${fontSans.variable} font-inter antialiased`}
       >
         <SessionProvider session={session}>
-          <Navbar session={session} />
-          {children}
-          <Toaster />
-          <Footer />
+          <GlobalProvider>
+            <Navbar session={session} />
+            {children}
+            <Toaster />
+            <Footer />
+          </GlobalProvider>
         </SessionProvider>
       </body>
     </html>
