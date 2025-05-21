@@ -13,7 +13,7 @@ interface MessageCardProps {
 }
 
 const MessageCard = ({ message }: MessageCardProps) => {
-    const { email, phone, body, property, createdAt } = message;
+    const { name, email, phone, body, property, createdAt } = message;
     const [isRead, setIsRead] = useState(message.read);
 
     const { setUnreadMessageCount } = useGlobalContext()
@@ -50,7 +50,7 @@ const MessageCard = ({ message }: MessageCardProps) => {
             </p>
 
             <ul className="mt-4">
-                <li><strong>Name:</strong> John Doe</li>
+                <li><strong>Name:</strong> {name}</li>
 
                 <li>
                     <strong>Reply Email:</strong>{' '}
