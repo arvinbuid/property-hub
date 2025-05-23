@@ -3,6 +3,7 @@ import authOptions from "../../utils/authOptions";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SessionProvider from "@/components/SessionProvider";
+import 'photoswipe/dist/photoswipe.css'
 
 import type { Metadata } from "next";
 import { Inter, Raleway } from "next/font/google";
