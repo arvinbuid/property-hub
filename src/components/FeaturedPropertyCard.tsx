@@ -9,7 +9,7 @@ interface FeaturedPropertyCardProps {
 }
 
 const FeaturedPropertyCard = ({ property }: FeaturedPropertyCardProps) => {
-    const { name, type, description, location, beds, baths, square_feet, amenities, rates, seller_info, images } = property;
+    const { name, type, location, beds, baths, square_feet, rates, images } = property;
 
     const getDisplayRate = () => {
         if (rates.monthly) {
