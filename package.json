@@ -14,7 +14,7 @@
     "clsx": "^2.1.1",
     "mongodb": "^6.16.0",
     "mongoose": "^8.14.2",
-    "next": "^15.3.6",
+    "next": "^16.1.2",
     "next-auth": "^4.24.11",
     "opencage-api-client": "^1.1.0",
     "photoswipe": "^5.4.4",
